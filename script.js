@@ -28,40 +28,38 @@ var questions = [
 ];
 
 // Selects element by class
-var ulEl=document.querySelector("choicesUl");
-// Selects element by id
+var timeEl=document.querySelector("#currentTime");
+var button=document.querySelector("#startTime");
+var choicesUl=document.querySelector("#choicesUl");
+var h1=document.querySelector("#questionsDiv > h1");
+var p=document.querySelector("#questionsDiv > p");
+var secondsLeft=3;
+var holdInterval=0;
 
-var mainEl = document.getElementById("main");
-
-var secondsLeft=75;
-var secondsLeft = 10;
-
-
-
-
-function setTime() {
-  // Sets interval in variable
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft + " seconds left till colorsplosion.";
-
-    if(secondsLeft === 0) {
-      // Stops execution of action at set interval
-      clearInterval(timerInterval);
-      // Calls function to create and append image
-      sendMessage();
+function startTimer() {
+    timeEl.textContent = "Time: " + secondsLeft;
+    if (secondsLeft <= 0) {
+        clearInterval(holdInterval);
+        // allDone();
+        timeEl.textContent = "Time's up!";
     }
-
-  }, 1000);
+    secondsLeft--;   
+}
+function startQuize () {
+    // We are checking zero because its originally set to zero
+    if (holdInterval === 0) {
+        holdInterval = setInterval(startTimer, 1000);
+    }
+h1.setAttribute("class","hide");
+p.setAttribute("class","hide");
+button.setAttribute("class","hide");
+// render(questionIndex);
 }
 
-// Function to create and append colorsplosion image
-function sendMessage() {
-  timeEl.textContent = " ";
-  var imgEl = document.createElement("img");
-  imgEl.setAttribute("src", "images/image_1.jpg");
-  mainEl.appendChild(imgEl);
 
-}
+button.addEventListener("click",startQuize);
 
-setTime();
+
+
+
+
